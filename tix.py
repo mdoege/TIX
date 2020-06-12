@@ -50,7 +50,7 @@ def mainprog(win, res):
 class TIX:
     def __init__(self):
         pygame.init()
-        self.res = 840, 210
+        self.res = 420, 105
         self.screen = pygame.display.set_mode(self.res, pygame.RESIZABLE)
         pygame.display.set_caption('TIX')
         self.screen.fill(BACKGROUND)
