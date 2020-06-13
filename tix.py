@@ -68,7 +68,7 @@ class TIX:
     def run(self):
         self.running = True
         while self.running:
-            self.clock.tick(1)
+            self.clock.tick(10)
             self.events()
             self.update()
         pygame.quit()
