@@ -7,7 +7,7 @@
 
 import pygame
 
-import sys, time, random
+import sys, time, datetime, random
 
 try: inter = int(sys.argv[1])
 except: inter = 4        # default update interval (secs)
@@ -55,7 +55,7 @@ class TIX:
         pygame.display.set_caption('TIX')
         self.screen.fill(BACKGROUND)
         self.clock = pygame.time.Clock()
-        self.last = 0
+        self.last = -1
 
     def events(self):
         for event in pygame.event.get():
@@ -74,12 +74,13 @@ class TIX:
         pygame.quit()
 
     def update(self):
-        if time.time() - self.last < inter:
-            return
-        self.last = time.time()
-        self.screen.fill(BACKGROUND)
-        mainprog(self.screen, self.res)
-        pygame.display.flip()
+        now = datetime.datetime.now()
+        tt = now.second // inter
+        if tt != self.last:
+            self.last = tt
+            self.screen.fill(BACKGROUND)
+            mainprog(self.screen, self.res)
+            pygame.display.flip()
 
 c = TIX()
 c.run()
