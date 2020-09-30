@@ -18,6 +18,7 @@ BLUE = 52, 101, 164
 BACKGROUND = 33, 41, 46
 GRAY = 76, 80, 82
 COL = (BACKGROUND, BACKGROUND, GRAY, RED, GREEN, BLUE)
+disp = []
 
 if '--24' in sys.argv:
     f = '%H%M'
@@ -31,10 +32,9 @@ def tog(start, end, n, col = 2):
     for z in random.sample(range(3 * (end - start)), n):
         disp[z % 3][start + z // 3] = col
 
-def mainprog(win, res):
+def newdisp():
+    "Create a new display pattern"
     global disp
-
-    boxx, boxy = res[0] // 12, res[0] // 12
 
     t = time.strftime(f, time.localtime())
     h1, h2, m1, m2 = [int(x) for x in t]
@@ -43,6 +43,19 @@ def mainprog(win, res):
     tog(2, 5, h2, 4)
     tog(6, 8, m1, 5)
     tog(9, 12, m2, 3)
+
+def mainprog(win, res):
+    global disp
+
+    old = disp.copy()
+    # try creating a different pattern if possible:
+    for i in range(20):
+        newdisp()
+        if disp != old:
+            break
+
+    boxx, boxy = res[0] // 12, res[0] // 12
+
     for x in range(12):
         for y in range(3):
             pygame.draw.rect(win, COL[disp[y][x]], [x * boxx + 1, y * boxy + 1, boxx - 2, boxy - 2])
