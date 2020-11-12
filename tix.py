@@ -96,6 +96,8 @@ class TIX:
             self.screen.fill(BACKGROUND)
             mainprog(self.screen, self.res)
             pygame.display.flip()
+        else:
+            pygame.display.flip()
 
 c = TIX()
 c.run()
