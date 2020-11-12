@@ -89,7 +89,9 @@ class TIX:
     def update(self):
         now = datetime.datetime.now()
         tt = now.second // inter
-        if tt != self.last:
+        # The time from time.localtime() may lag slightly behind datetime.now(),
+        # so wait for time.localtime() being in agreement as to the minute:
+        if tt != self.last and now.minute == time.localtime().tm_min:
             self.last = tt
             self.screen.fill(BACKGROUND)
             mainprog(self.screen, self.res)
