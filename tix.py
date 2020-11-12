@@ -7,7 +7,7 @@
 
 import pygame
 
-import sys, time, datetime, random
+import sys, time, random
 
 try: inter = int(sys.argv[1])
 except: inter = 4        # default update interval (secs)
@@ -87,11 +87,8 @@ class TIX:
         pygame.quit()
 
     def update(self):
-        now = datetime.datetime.now()
-        tt = now.second // inter
-        # The time from time.localtime() may lag slightly behind datetime.now(),
-        # so wait for time.localtime() being in agreement as to the minute:
-        if tt != self.last and now.minute == time.localtime().tm_min:
+        tt = time.localtime().tm_sec // inter
+        if tt != self.last:
             self.last = tt
             self.screen.fill(BACKGROUND)
             mainprog(self.screen, self.res)
